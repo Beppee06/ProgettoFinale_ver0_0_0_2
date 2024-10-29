@@ -15,6 +15,12 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         private readonly Mock<IUserRepository> _usReMock = new(MockBehavior.Strict);
         private readonly Mock<IConfiguration> _usCoMock = new(MockBehavior.Strict);
 
+
+
+
+        //GetUser
+
+
         [Test]
         public async Task GetUserSuccess()
         {
@@ -107,6 +113,12 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         }
 
 
+
+
+
+
+
+        //EmailUsed
 
 
         [Test]
@@ -207,8 +219,23 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
         //Login
 
-        
-        
+
+
+        [Test]
+        public async Task LoginFailNoSuchAccount()
+        {
+            UserManager _userManagerMock = new UserManager(_usCoMock.Object, _usReMock.Object);
+            SimpleUser simpleUser0 = new SimpleUser();
+            simpleUser0.Email = "boh";
+            simpleUser0.Password = "ciao";
+            User u = null;
+
+            _usReMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
+
+            async Task Act() => await _userManagerMock.Login(simpleUser0);
+            Assert.ThrowsAsync<Exception>(Act);
+        }
+
 
 
         [Test]
@@ -240,7 +267,6 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             string token = await _userManagerMock.Login(simpleUser0);
 
             Assert.Equals(token, Is.EqualTo(""));
-
         }
 
 
