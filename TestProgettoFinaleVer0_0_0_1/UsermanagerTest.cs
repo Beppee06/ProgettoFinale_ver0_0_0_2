@@ -5,6 +5,7 @@ using esDef.Models;
 using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 {
@@ -249,19 +250,18 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
                 Audience = "API"
             };
 
-            var csm = new Mock<IConfigurationSection>();
-
             UserManager _userManagerMock = new UserManager(_usCoMock.Object, _usReMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "boh";
             simpleUser0.Password = "ciao";
             User u = new User(simpleUser0);
 
-            _usReMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
-            _usCoMock.Setup(m => m.GetSection("TokenOptions")).Returns(csm.Object);
-            //csm.Setup(m => m.Get<TokenOption>()).Returns(to);
+            var tokenOptionsSectionMock = new Mock<IConfigurationSection>(MockBehavior.Strict);
 
-            //enc.Setup(m => m.GetBytes("")).Returns(prova);
+            _usReMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
+            _usCoMock.Setup(m => m.GetSection("TokenOptions")).Returns(tokenOptionsSectionMock.Object);
+            tokenOptionsSectionMock.Setup(m => m.Value).Returns(JsonConvert.SerializeObject(to));
+            //tokenOptionsSectionMock.Setup(m => m).Returns();
 
 
             string token = await _userManagerMock.Login(simpleUser0);
@@ -274,5 +274,34 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
 
         //register
+
+        /*
+        [Test]
+        public async Task RegisterSuccess()
+        {
+
+        }*/
+
+
+
+
+        [Test]
+        public async Task RegisterFailMissingFields()
+        {
+            UserManager _userManagerMock = new UserManager(_usCoMock.Object, _usReMock.Object);
+            SimpleUser simpleUser0 = new SimpleUser();
+            simpleUser0.Email = "";
+            simpleUser0.Password = "ciao";
+            User u = new User(simpleUser0);
+            SimpleUser simpleUser1 = new SimpleUser();
+            simpleUser1.Email = "boh";
+            simpleUser1.Password = "";
+
+            async Task Act0() => await _userManagerMock.Register(simpleUser0);
+            Assert.ThrowsAsync<Exception>(Act0);
+
+            async Task Act1() => await _userManagerMock.Register(simpleUser0);
+            Assert.ThrowsAsync<Exception>(Act1);
+        }
     }
 }
