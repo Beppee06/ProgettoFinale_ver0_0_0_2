@@ -1,10 +1,35 @@
 ﻿using esDef.Models;
 using Microsoft.IdentityModel.Tokens;
 using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper;
 using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
+
+namespace ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper
+{
+    public interface IWrapperConfiguration
+    {
+        TokenOption GetTokenOption(string key);
+    }
+
+    public class WrapperConfiguration : IWrapperConfiguration
+    {
+        private readonly IConfiguration _configuration;
+        public WrapperConfiguration(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public TokenOption GetTokenOption(string key)
+        {
+            return _configuration.GetSection(key).Get<TokenOption>();
+        }
+    }
+}
+
+
 
 namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations
 {
@@ -12,12 +37,14 @@ namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations
     {
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
+        private readonly IWrapperConfiguration _wrapperConfiguration;
 
 
-        public UserManager(IConfiguration configuration, IUserRepository userRepository)
+        public UserManager(IConfiguration configuration, IUserRepository userRepository, IWrapperConfiguration wrapperConfiguration)
         {
             _configuration = configuration;
             _userRepository = userRepository;
+            _wrapperConfiguration = wrapperConfiguration;
         }
 
 
@@ -40,8 +67,8 @@ namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations
         {
             
             //legge la configurazione di TokenOptions
-            var tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOption>();
-            //Console.WriteLine(tokenOptions.Secret);
+            var tokenOptions = _wrapperConfiguration.GetTokenOption("TokenOptions");
+            //Console.WriteLine(_configuration.GetSection("TokenOptions").Key);
             //prende secret
             var key = Encoding.ASCII.GetBytes(tokenOptions.Secret);
 

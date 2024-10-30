@@ -6,6 +6,7 @@ using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json;
+using ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper;
 
 namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 {
@@ -15,11 +16,18 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
     {
         private readonly Mock<IUserRepository> _userRepositoryMock = new(MockBehavior.Strict);
         private readonly Mock<IConfiguration> _userConfigurationMock = new(MockBehavior.Strict);
+        private readonly Mock<IWrapperConfiguration> _wrapperUserConfigurationMock = new(MockBehavior.Strict);
+
+       /* public UsermanagerTest(IConfigurationWrapper configurationWrapper)
+        {
+            _wrapperUserConfigurationMock = configurationWrapper;
+        }*/
+
 
         [Test]
         public async Task GetUserSuccess()
         {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object); 
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
@@ -41,7 +49,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void GetUserFailEmailMissing()
         {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "";
             simpleUser0.Password = "ciao";
@@ -66,7 +74,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void GetUserFailPasswordMissing()
         {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "boh";
             simpleUser0.Password = "";
@@ -90,7 +98,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
         [Test]
         public void GetUserAccountDoesNotExist() {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
@@ -113,7 +121,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedNoSuchEmailInTheDatabase()
         {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
@@ -138,7 +146,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedEmailAlreadyInUse()
         {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
@@ -165,7 +173,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedEmailMissing()
         {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "";
             simpleUser0.Password = "ciao";
@@ -188,7 +196,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedPasswordMissing()
         {
-            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "boh";
             simpleUser0.Password = "";
@@ -223,31 +231,24 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
                 Audience = "API"
             };
 
+            
             var _userConfigurationSectionMock = new Mock<IConfigurationSection>(MockBehavior.Strict);
-            _userConfigurationSectionMock.SetupGet(x => x.Key).Returns("_userConfigurationSectionMock");
-            _userConfigurationSectionMock.SetupGet(m => m.Value).Returns(JsonSerializer.Serialize(ExpectedTokenOption));
-            _userConfigurationSectionMock.SetupGet(m => m.Path).Returns("TokenOptions");
+            _userConfigurationSectionMock.Setup(x => x.Key).Returns("tokenoptions");
+            _userConfigurationSectionMock.Setup(m => m.Value).Returns(JsonSerializer.Serialize(ExpectedTokenOption));
+            _userConfigurationSectionMock.Setup(m => m.Path).Returns("tokenoptions");
             _userConfigurationSectionMock.Setup(m => m.GetChildren()).Returns(Enumerable.Empty<IConfigurationSection>());
 
             _userConfigurationMock.Setup(m => m.GetSection("TokenOptions")).Returns(_userConfigurationSectionMock.Object);
-            //_userConfigurationSectionMock.SetupGet(x=> x.).Returns(ExpectedTokenOption);
 
 
-
-
-            var tokenOptions = _userConfigurationMock.Object.GetSection("TokenOptions").Get<TokenOption>();
-            Console.Write(_userConfigurationMock);
-           // Assert.That(tokenOptions != null);
-            
-            //var key = Encoding.ASCII.GetBytes(tokenOptions.Secret);
-
+            _wrapperUserConfigurationMock.Setup(m => m.GetTokenOption("TokenOptions")).Returns(ExpectedTokenOption);
 
             //setup get
-            UserManager _userManagerMock = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
-            SimpleUser simpleUser0 = new SimpleUser();
+            UserManager _userManagerMock = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            SimpleUser simpleUser0 = new();
             simpleUser0.Email = "boh";
             simpleUser0.Password = "ciao";
-            User u = new User(simpleUser0);
+            User u = new (simpleUser0);
 
             _userRepositoryMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
             
@@ -260,7 +261,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
             string token = await _userManagerMock.Login(simpleUser0);
 
-            Assert.Equals(token, Is.EqualTo(""));
+            Assert.AreEqual(token, "");
 
         }
         
@@ -270,4 +271,26 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
         //register
     }
+
+    /*
+    public interface IConfigurationWrapper
+    {
+        IConfigurationSection GetSectionValue(string sectionName);
+    }
+
+    public class ConfigurationWrapper : IConfigurationWrapper
+    {
+        private readonly IConfiguration _configuration;
+
+        public ConfigurationWrapper(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public IConfigurationSection GetSectionValue(string sectionName)
+        {
+            return _configuration.GetSection(sectionName);
+        }
+    }*/
+
 }
