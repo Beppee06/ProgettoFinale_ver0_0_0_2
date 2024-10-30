@@ -211,7 +211,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         
         
 
-        /*
+        
         [Test]
         public async Task LoginSuccess()
         {
@@ -247,7 +247,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
             Assert.Equals(token, Is.EqualTo(""));
 
-        }*/
+        }
         
 
 
