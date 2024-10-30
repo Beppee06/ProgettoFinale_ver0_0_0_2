@@ -18,12 +18,6 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         private readonly Mock<IConfiguration> _userConfigurationMock = new(MockBehavior.Strict);
         private readonly Mock<IWrapperConfiguration> _wrapperUserConfigurationMock = new(MockBehavior.Strict);
 
-       /* public UsermanagerTest(IConfigurationWrapper configurationWrapper)
-        {
-            _wrapperUserConfigurationMock = configurationWrapper;
-        }*/
-
-
         [Test]
         public async Task GetUserSuccess()
         {
@@ -116,6 +110,12 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         }
 
 
+
+
+
+
+
+        //EmailUsed
 
 
         [Test]
@@ -216,8 +216,23 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
         //Login
 
-        
-        
+
+
+        [Test]
+        public async Task LoginFailNoSuchAccount()
+        {
+            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            SimpleUser simpleUser0 = new SimpleUser();
+            simpleUser0.Email = "boh";
+            simpleUser0.Password = "ciao";
+            User u = null;
+
+            _userRepositoryMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
+
+            async Task Act() => await _userManagerMock.Login(simpleUser0);
+            Assert.ThrowsAsync<Exception>(Act);
+        }
+
 
         
         [Test]
@@ -251,14 +266,12 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             User u = new (simpleUser0);
 
             _userRepositoryMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
-            
-            
             //var tokenOptions = csm.Object.GetSection("TokenOptions").Get<TokenOption>();
             //csm.Setup(m => m.Get<TokenOption>()).Returns(to);
-
+        
             //enc.Setup(m => m.GetBytes("")).Returns(prova);
-
-
+        
+        
             string token = await _userManagerMock.Login(simpleUser0);
 
             Assert.AreEqual(token, "");
@@ -270,6 +283,35 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
 
         //register
+
+        /*
+        [Test]
+        public async Task RegisterSuccess()
+        {
+
+        }*/
+
+
+
+
+        [Test]
+        public async Task RegisterFailMissingFields()
+        {
+            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            SimpleUser simpleUser0 = new SimpleUser();
+            simpleUser0.Email = "";
+            simpleUser0.Password = "ciao";
+            User u = new User(simpleUser0);
+            SimpleUser simpleUser1 = new SimpleUser();
+            simpleUser1.Email = "boh";
+            simpleUser1.Password = "";
+
+            async Task Act0() => await _userManagerMock.Register(simpleUser0);
+            Assert.ThrowsAsync<Exception>(Act0);
+
+            async Task Act1() => await _userManagerMock.Register(simpleUser0);
+            Assert.ThrowsAsync<Exception>(Act1);
+        }
     }
 
     /*

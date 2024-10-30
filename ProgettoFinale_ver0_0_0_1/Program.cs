@@ -27,6 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Configura JWT
 // Questo serve per contorllare se JWT è valido o no rispettando le seguente regole 
+
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOption>();
 var key = Encoding.ASCII.GetBytes(tokenOptions.Secret);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

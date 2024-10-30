@@ -1,5 +1,6 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Managers.Implementations;
 using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper;
 using ProgettoFinale_ver0_0_0_1.Repositories.Implementations;
 using ProgettoFinale_ver0_0_0_1.Repositories.Interfaces;
 using ProgettoFinale_ver0_0_0_1.Repository.Implementations;
@@ -16,7 +17,8 @@ namespace ProgettoFinale_ver0_0_0_1.Setup
                 .AddScoped<IBookManager, BookManager>()
                 .AddScoped<IBookRepository, BookRepository>()
                 .AddScoped<IUserManager, UserManager>()
-                .AddScoped<IUserRepository, UserRepository>();
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IWrapperConfiguration, WrapperConfiguration>();
             return services;
         }
     }
