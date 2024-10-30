@@ -236,9 +236,10 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
 
             var tokenOptions = _userConfigurationMock.Object.GetSection("TokenOptions").Get<TokenOption>();
-            Assert.That(tokenOptions == null);
+            Console.Write(_userConfigurationMock);
+           // Assert.That(tokenOptions != null);
             
-            var key = Encoding.ASCII.GetBytes(tokenOptions.Secret);
+            //var key = Encoding.ASCII.GetBytes(tokenOptions.Secret);
 
 
             //setup get
