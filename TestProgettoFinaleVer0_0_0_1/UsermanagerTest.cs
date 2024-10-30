@@ -5,7 +5,7 @@ using esDef.Models;
 using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 {
@@ -13,8 +13,8 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
     //https://www.youtube.com/watch?v=9ZvDBSQa_so
     public class UsermanagerTest
     {
-        private readonly Mock<IUserRepository> _usReMock = new(MockBehavior.Strict);
-        private readonly Mock<IConfiguration> _usCoMock = new(MockBehavior.Strict);
+        private readonly Mock<IUserRepository> _userRepositoryMock = new(MockBehavior.Strict);
+        private readonly Mock<IConfiguration> _userConfigurationMock = new(MockBehavior.Strict);
 
 
 
@@ -25,13 +25,13 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public async Task GetUserSuccess()
         {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object); 
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object); 
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
             User expectedUser = new User("boh", "ciao"); // Dati utente attesi
             
-            _usReMock.Setup(m => m.GetUser(simpleUser)).ReturnsAsync(expectedUser);
+            _userRepositoryMock.Setup(m => m.GetUser(simpleUser)).ReturnsAsync(expectedUser);
 
             var result = await _umt.GetUser(simpleUser);
 
@@ -39,7 +39,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.That(result, Is.EqualTo(expectedUser));
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.GetUser(simpleUser), Times.Once);
+            _userRepositoryMock.Verify(m => m.GetUser(simpleUser), Times.Once);
         }
 
 
@@ -47,7 +47,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void GetUserFailEmailMissing()
         {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "";
             simpleUser0.Password = "ciao";
@@ -63,7 +63,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.ThrowsAsync<Exception>(Act0);
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.GetUser(simpleUser0), Times.Never);
+            _userRepositoryMock.Verify(m => m.GetUser(simpleUser0), Times.Never);
         }
 
 
@@ -72,7 +72,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void GetUserFailPasswordMissing()
         {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "boh";
             simpleUser0.Password = "";
@@ -89,20 +89,20 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.ThrowsAsync<Exception>(Act0);
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.GetUser(simpleUser0), Times.Never);
+            _userRepositoryMock.Verify(m => m.GetUser(simpleUser0), Times.Never);
         }
 
 
 
         [Test]
         public void GetUserAccountDoesNotExist() {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
             User expectedUser = null; // Dati utente attesi
 
-            _usReMock.Setup(m => m.GetUser(simpleUser)).ReturnsAsync(expectedUser);
+            _userRepositoryMock.Setup(m => m.GetUser(simpleUser)).ReturnsAsync(expectedUser);
 
             async Task Act() => await _umt.GetUser(simpleUser);
 
@@ -110,7 +110,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.ThrowsAsync<Exception>(Act);
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.GetUser(simpleUser), Times.Once);
+            _userRepositoryMock.Verify(m => m.GetUser(simpleUser), Times.Once);
         }
 
 
@@ -125,13 +125,13 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedNoSuchEmailInTheDatabase()
         {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
             User expectedUser = null; // Dati utente attesi
 
-            _usReMock.Setup(m => m.FindUserWithEmail(simpleUser)).ReturnsAsync(expectedUser);
+            _userRepositoryMock.Setup(m => m.FindUserWithEmail(simpleUser)).ReturnsAsync(expectedUser);
 
             async Task Act()
             {
@@ -142,7 +142,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.DoesNotThrowAsync(Act);
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.FindUserWithEmail(simpleUser), Times.Once);
+            _userRepositoryMock.Verify(m => m.FindUserWithEmail(simpleUser), Times.Once);
         }
 
 
@@ -150,13 +150,13 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedEmailAlreadyInUse()
         {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
             SimpleUser simpleUser = new SimpleUser();
             simpleUser.Email = "boh";
             simpleUser.Password = "ciao";
             User expectedUser = new User("", ""); // Dati utente attesi
 
-            _usReMock.Setup(m => m.FindUserWithEmail(simpleUser)).ReturnsAsync(expectedUser);
+            _userRepositoryMock.Setup(m => m.FindUserWithEmail(simpleUser)).ReturnsAsync(expectedUser);
 
             async Task Act()
             {
@@ -167,7 +167,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.ThrowsAsync<Exception>(Act);
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.FindUserWithEmail(simpleUser), Times.Once);
+            _userRepositoryMock.Verify(m => m.FindUserWithEmail(simpleUser), Times.Once);
         }
 
 
@@ -177,7 +177,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedEmailMissing()
         {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "";
             simpleUser0.Password = "ciao";
@@ -192,7 +192,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.ThrowsAsync<Exception>(Act);
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.FindUserWithEmail(simpleUser0), Times.Never);
+            _userRepositoryMock.Verify(m => m.FindUserWithEmail(simpleUser0), Times.Never);
         }
 
 
@@ -200,7 +200,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         [Test]
         public void EmailUsedPasswordMissing()
         {
-            UserManager _umt = new UserManager(_usCoMock.Object, _usReMock.Object);
+            UserManager _umt = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "boh";
             simpleUser0.Password = "";
@@ -215,7 +215,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             Assert.ThrowsAsync<Exception>(Act);
 
             // Verifica che i metodi siano stati chiamati
-            _usReMock.Verify(m => m.FindUserWithEmail(simpleUser0), Times.Never);
+            _userRepositoryMock.Verify(m => m.FindUserWithEmail(simpleUser0), Times.Never);
         }
 
         //Login
@@ -238,32 +238,46 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         }
 
 
-        /*
+        
         [Test]
         public async Task LoginSuccess()
         {
-            var to = new TokenOption
+            var ExpectedTokenOption = new TokenOption
             {
                 Secret = "non sapevo cosa mettere ma serve renderla piu' lunga e quindi questo sto facendo, o no?",
                 ExpiryDays = 7,
                 Issuer = "ServerProva",
                 Audience = "API"
             };
-        
-            var csm = new Mock<IConfigurationSection>(MockBehavior.Strict);
-        
-            UserManager _userManagerMock = new UserManager(_usCoMock.Object, _usReMock.Object);
+
+            var _userConfigurationSectionMock = new Mock<IConfigurationSection>(MockBehavior.Strict);
+            _userConfigurationSectionMock.SetupGet(x => x.Key).Returns("_userConfigurationSectionMock");
+            _userConfigurationSectionMock.SetupGet(m => m.Value).Returns(JsonSerializer.Serialize(ExpectedTokenOption));
+            _userConfigurationSectionMock.SetupGet(m => m.Path).Returns("TokenOptions");
+            _userConfigurationSectionMock.Setup(m => m.GetChildren()).Returns(Enumerable.Empty<IConfigurationSection>());
+
+            _userConfigurationMock.Setup(m => m.GetSection("TokenOptions")).Returns(_userConfigurationSectionMock.Object);
+            //_userConfigurationSectionMock.SetupGet(x=> x.).Returns(ExpectedTokenOption);
+
+
+
+
+            var tokenOptions = _userConfigurationMock.Object.GetSection("TokenOptions").Get<TokenOption>();
+            Console.Write(_userConfigurationMock);
+           // Assert.That(tokenOptions != null);
+            
+            //var key = Encoding.ASCII.GetBytes(tokenOptions.Secret);
+
+
+            //setup get
+            UserManager _userManagerMock = new UserManager(_userConfigurationMock.Object, _userRepositoryMock.Object);
+          
             SimpleUser simpleUser0 = new SimpleUser();
             simpleUser0.Email = "boh";
             simpleUser0.Password = "ciao";
             User u = new User(simpleUser0);
-        
-            _usReMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
-            _usCoMock.Setup(m => m.GetSection("TokenOptions")).Returns(csm.Object);
-            csm.Setup(m => m.Value).Returns(JsonSerializer.Serialize(to));
-            csm.Setup(m => m.Path).Returns("TokenOptions");
-            csm.Setup(m => m.GetChildren()).Returns(Enumerable.Empty<IConfigurationSection>());
-        
+
+            _userRepositoryMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
             //var tokenOptions = csm.Object.GetSection("TokenOptions").Get<TokenOption>();
             //csm.Setup(m => m.Get<TokenOption>()).Returns(to);
         
@@ -274,7 +288,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         
             Assert.Equals(token, Is.EqualTo(""));
         }
-        */
+        
 
 
 
