@@ -5,6 +5,7 @@ using esDef.Models;
 using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using System.Text.Json;
 
 namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 {
@@ -216,13 +217,13 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
         {
             var to = new TokenOption
             {
-                Secret = "non sapevo cosa mettere ma serve renderla piu' lunga e quindi questo sto facendo, o no?'",
+                Secret = "non sapevo cosa mettere ma serve renderla piu' lunga e quindi questo sto facendo, o no?",
                 ExpiryDays = 7,
                 Issuer = "ServerProva",
                 Audience = "API"
             };
 
-            var csm = new Mock<IConfigurationSection>();
+            var csm = new Mock<IConfigurationSection>(MockBehavior.Strict);
 
             UserManager _userManagerMock = new UserManager(_usCoMock.Object, _usReMock.Object);
             SimpleUser simpleUser0 = new SimpleUser();
@@ -232,6 +233,11 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
             _usReMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
             _usCoMock.Setup(m => m.GetSection("TokenOptions")).Returns(csm.Object);
+            csm.Setup(m => m.Value).Returns(JsonSerializer.Serialize(to));
+            csm.Setup(m => m.Path).Returns("TokenOptions");
+            csm.Setup(m => m.GetChildren()).Returns(Enumerable.Empty<IConfigurationSection>());
+
+            //var tokenOptions = csm.Object.GetSection("TokenOptions").Get<TokenOption>();
             //csm.Setup(m => m.Get<TokenOption>()).Returns(to);
 
             //enc.Setup(m => m.GetBytes("")).Returns(prova);
@@ -241,8 +247,8 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
             Assert.Equals(token, Is.EqualTo(""));
 
-        }
-        */
+        }*/
+        
 
 
 
