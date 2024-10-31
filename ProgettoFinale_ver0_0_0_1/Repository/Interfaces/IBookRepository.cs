@@ -1,6 +1,6 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Books;
 
-namespace ProgettoFinale_ver0_0_0_1.Repository.Interfaces
+namespace ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Books
 {
     public interface IBookRepository
     {

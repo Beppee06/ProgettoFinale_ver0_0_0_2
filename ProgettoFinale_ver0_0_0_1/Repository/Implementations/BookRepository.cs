@@ -1,8 +1,8 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Books;
 using Microsoft.EntityFrameworkCore;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Books;
 
-namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
+namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations.Books
 {
     internal class BookRepository : IBookRepository
     {

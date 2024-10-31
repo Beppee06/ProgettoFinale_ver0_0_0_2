@@ -1,9 +1,9 @@
 using Moq;
-using ProgettoFinale_ver0_0_0_1.Managers.Implementations;
+using ProgettoFinale_ver0_0_0_1.Managers.Implementations.Users;
 using Microsoft.Extensions.Configuration;
 using ProgettoFinale_ver0_0_0_1.Models.Users;
 using ProgettoFinale_ver0_0_0_1.Models.TokenOptions;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Users;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json;
@@ -15,7 +15,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
 {
     //https://www.youtube.com/watch?v=uvqAGchg8bc
     //https://www.youtube.com/watch?v=9ZvDBSQa_so
-    public class UserTest
+    internal class UserTest
     {
         private readonly Mock<IUserRepository> _userRepositoryMock = new(MockBehavior.Strict);
         private readonly Mock<IConfiguration> _userConfigurationMock = new(MockBehavior.Strict);

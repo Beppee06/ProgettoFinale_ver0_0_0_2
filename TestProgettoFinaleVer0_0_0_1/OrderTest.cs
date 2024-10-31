@@ -1,12 +1,9 @@
 ﻿using Moq;
-using ProgettoFinale_ver0_0_0_1.Repositories.Implementations;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Managers.Implementations.Orders;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Orders;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Books;
 using ProgettoFinale_ver0_0_0_1.Models.Orders;
 using ProgettoFinale_ver0_0_0_1.Models.Books;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using ProgettoFinale_ver0_0_0_1.Models.Users;
-using System.Net;
-
 namespace TestProgettoFinaleVer0_0_0_1.Tests.Orders
 {
     internal class OrderTest

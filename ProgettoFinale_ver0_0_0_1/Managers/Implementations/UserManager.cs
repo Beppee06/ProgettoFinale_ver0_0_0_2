@@ -1,9 +1,9 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Users;
 using ProgettoFinale_ver0_0_0_1.Models.TokenOptions;
 using Microsoft.IdentityModel.Tokens;
-using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Users;
 using ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -32,7 +32,7 @@ namespace ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper
 
 
 
-namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations
+namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations.Users
 {
     public class UserManager : IUserManager
     {

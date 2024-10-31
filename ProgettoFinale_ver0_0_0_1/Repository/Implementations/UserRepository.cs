@@ -1,8 +1,8 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Users;
 
-namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
+namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations.Users
 {
     internal class UserRepository : IUserRepository
     {

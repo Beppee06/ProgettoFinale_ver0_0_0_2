@@ -2,7 +2,7 @@
 using ProgettoFinale_ver0_0_0_1.Models.Books;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ProgettoFinale_ver0_0_0_1.Repositories.Interfaces
+namespace ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Orders
 {
     public interface IOrderManager
     {

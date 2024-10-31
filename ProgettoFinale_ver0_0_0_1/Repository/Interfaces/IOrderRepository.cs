@@ -1,6 +1,6 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Orders;
 
-namespace ProgettoFinale_ver0_0_0_1.Repository.Interfaces
+namespace ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Orders
 {
     public interface IOrderRepository
     {

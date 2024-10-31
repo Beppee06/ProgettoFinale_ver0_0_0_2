@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ProgettoFinale_ver0_0_0_1.Models.TokenOptions;
-using ProgettoFinale_ver0_0_0_1.Repositories.Interfaces;
-using ProgettoFinale_ver0_0_0_1.Repositories.Implementations;
 using ProgettoFinale_ver0_0_0_1.Setup;
 
 var builder = WebApplication.CreateBuilder(args);

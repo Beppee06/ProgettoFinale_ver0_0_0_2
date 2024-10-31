@@ -1,9 +1,9 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Books;
-using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Books;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Books;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations
+namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations.Books
 {
     public class BookManager : IBookManager
     {

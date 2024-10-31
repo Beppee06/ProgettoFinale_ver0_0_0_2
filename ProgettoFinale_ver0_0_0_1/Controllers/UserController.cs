@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using ProgettoFinale_ver0_0_0_1.Models.Users;
-using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Users;
 using System.ComponentModel.DataAnnotations;
 
-namespace esDef.Controllers
+namespace ProgettoFinale_ver0_0_0_1.Controllers.Users
 {
     [ApiController]
     [Route("[controller]")]

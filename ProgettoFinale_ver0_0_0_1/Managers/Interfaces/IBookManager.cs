@@ -1,6 +1,6 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Books;
 
-namespace ProgettoFinale_ver0_0_0_1.Managers.Interfaces
+namespace ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Books
 {
     public interface IBookManager
     {

@@ -6,10 +6,10 @@ using System.Security.Claims;
 using System.Text;
 using ProgettoFinale_ver0_0_0_1.Models.Orders;
 using Microsoft.AspNetCore.Authorization;
-using ProgettoFinale_ver0_0_0_1.Repositories.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Orders;
 
 
-namespace AppFinaleLibri.Controllers
+namespace ProgettoFinale_ver0_0_0_1.Controllers.Orders
 {
     [ApiController]
     [Route("[controller]")]

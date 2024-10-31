@@ -2,11 +2,12 @@
 using ProgettoFinale_ver0_0_0_1.Models.Books;
 using Microsoft.AspNetCore.Mvc;
 using ProgettoFinale_ver0_0_0_1.Managers;
-using ProgettoFinale_ver0_0_0_1.Repositories.Interfaces;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Orders;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Orders;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Books;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ProgettoFinale_ver0_0_0_1.Repositories.Implementations
+namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations.Orders
 {
     public class OrderManager : IOrderManager
     {

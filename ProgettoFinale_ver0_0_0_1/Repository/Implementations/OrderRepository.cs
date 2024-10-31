@@ -1,10 +1,8 @@
 ﻿using ProgettoFinale_ver0_0_0_1.Models.Orders;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProgettoFinale_ver0_0_0_1.Repositories.Interfaces;
-using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Repository.Interfaces.Orders;
 
-namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
+namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations.Orders
 {
 
     internal class OrderRepository : IOrderRepository
