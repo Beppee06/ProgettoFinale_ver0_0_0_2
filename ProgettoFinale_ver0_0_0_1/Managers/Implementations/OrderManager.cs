@@ -48,7 +48,7 @@ namespace ProgettoFinale_ver0_0_0_1.Repositories.Implementations
             try
             {
                 Guid bookId = await FoundBook(simpleBook);
-                _orderRepository.AddOrder(bookId, UserId);
+                await _orderRepository.AddOrder(bookId, UserId);
                 
             } catch (Exception e) {
                 throw new Exception(e.Message);
@@ -58,12 +58,12 @@ namespace ProgettoFinale_ver0_0_0_1.Repositories.Implementations
 
         public async Task<Guid> FoundBook(SimpleBook simpleBook)
         {
-            Guid sol = await _bookRepository.GetBookId(simpleBook);
-            if(sol == null)
-            {
+            Guid? sol = await _bookRepository.GetBookId(simpleBook);
+
+            if (sol == null)
                 throw new Exception("Book not found");
-            }
-            return sol;
+
+            return (Guid)sol;
         }
     }
 }

@@ -13,16 +13,16 @@ namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
         }
 
 
-        public async Task<Guid> GetBookId(SimpleBook s)
+        public async Task<Guid?> GetBookId(SimpleBook s)
         {
-            Guid Id = await _context.Books.Where(x=> x.Author == s.Author 
+            var Id = await _context.Books.Where(x=> x.Author == s.Author 
                             && x.Title == s.Title)
                     .Select(x=> x.BookId)
-                    .FirstAsync();
+                    .FirstOrDefaultAsync();
             return Id;
         }
 
-
+#pragma warning disable CS8603
         public async Task<Book> GetBook(SimpleBook s)
         {
             var book = await _context.Books.Where(x => x.Author == s.Author
@@ -30,6 +30,7 @@ namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
                         .FirstOrDefaultAsync();
             return book;
         }
+#pragma warning restore CS8603
 
 
         public async Task<IEnumerable<Book>> GetBookList()

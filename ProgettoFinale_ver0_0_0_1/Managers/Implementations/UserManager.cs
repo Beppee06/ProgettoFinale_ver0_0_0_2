@@ -68,7 +68,8 @@ namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations
             
             //legge la configurazione di TokenOptions
             var tokenOptions = _wrapperConfiguration.GetTokenOption("TokenOptions");
-            //Console.WriteLine(_configuration.GetSection("TokenOptions").Key);
+            if (tokenOptions == null)
+                throw new Exception("didn't find the section or the <TokenOption> object");
             //prende secret
             var key = Encoding.ASCII.GetBytes(tokenOptions.Secret);
 
@@ -104,7 +105,7 @@ namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations
         {
             if (string.IsNullOrEmpty(s.Email) || string.IsNullOrEmpty(s.Password))
                 throw new Exception("non tutti i campi sono stati compilati");
-            User check = await _userRepository.FindUserWithEmail(s);
+            var check = await _userRepository.FindUserWithEmail(s);
             if (check != null)
                 throw new Exception("l'email e' gia' in uso");
 

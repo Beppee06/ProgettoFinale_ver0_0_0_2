@@ -2,6 +2,7 @@
 using Swashbuckle.AspNetCore.Annotations;
 using esDef.Models;
 using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace esDef.Controllers
 {
@@ -20,7 +21,7 @@ namespace esDef.Controllers
         [HttpPost("Login")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(string))]
         [SwaggerResponse(StatusCodes.Status404NotFound, null, null)]
-        public async Task<IActionResult> LoginAsync([FromBody] SimpleUser u)
+        public async Task<IActionResult> LoginAsync([Required][FromBody] SimpleUser u)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace esDef.Controllers
         [HttpPost("Register")]
         [SwaggerResponse(StatusCodes.Status200OK, null, typeof(string))]
         [SwaggerResponse(StatusCodes.Status404NotFound, null, null)]
-        public async Task<IActionResult> RegisterAsync([FromBody] SimpleUser u)
+        public async Task<IActionResult> RegisterAsync([Required][FromBody] SimpleUser u)
         {
             try
             {
