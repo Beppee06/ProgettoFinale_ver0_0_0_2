@@ -14,7 +14,7 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 {
     //https://www.youtube.com/watch?v=uvqAGchg8bc
     //https://www.youtube.com/watch?v=9ZvDBSQa_so
-    public class UsermanagerTest
+    public class UserTest
     {
         private readonly Mock<IUserRepository> _userRepositoryMock = new(MockBehavior.Strict);
         private readonly Mock<IConfiguration> _userConfigurationMock = new(MockBehavior.Strict);
@@ -301,16 +301,16 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
             _wrapperUserConfigurationMock.Setup(m => m.GetTokenOption("TokenOptions")).Returns(ExpectedTokenOption);
 
             UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
-            SimpleUser simpleUser0 = new()
+            SimpleUser simpleUser = new()
             {
                 Email = "boh",
                 Password = "ciao"
             };
-            User u = new(simpleUser0);
+            User u = new(simpleUser);
 
-            _userRepositoryMock.Setup(m => m.GetUser(simpleUser0)).ReturnsAsync(u);
+            _userRepositoryMock.Setup(m => m.GetUser(simpleUser)).ReturnsAsync(u);
 
-            string token = await _userManagerMock.Login(simpleUser0);
+            string token = await _userManagerMock.Login(simpleUser);
 
             Assert.IsFalse(string.IsNullOrEmpty(token));
         }
@@ -348,8 +348,70 @@ namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
 
             Assert.ThrowsAsync<Exception>(async () => await _userManagerMock.Login(simpleUser));
         }
+
+
+
+
+        //register
+
+        [Test]
+        public async Task RegisterSuccessfull()
+        {
+            var ExpectedTokenOption = new TokenOption
+            {
+                Secret = "non sapevo cosa mettere ma serve renderla piu' lunga e quindi questo sto facendo, o no?",
+                ExpiryDays = 7,
+                Issuer = "ServerProva",
+                Audience = "API"
+            };
+
+            var _userConfigurationSectionMock = new Mock<IConfigurationSection>(MockBehavior.Strict);
+            _userConfigurationSectionMock.Setup(x => x.Key).Returns("tokenoptions");
+            _userConfigurationSectionMock.Setup(m => m.Value).Returns(JsonSerializer.Serialize(ExpectedTokenOption));
+            _userConfigurationSectionMock.Setup(m => m.Path).Returns("tokenoptions");
+            _userConfigurationSectionMock.Setup(m => m.GetChildren()).Returns(Enumerable.Empty<IConfigurationSection>());
+
+            _userConfigurationMock.Setup(m => m.GetSection("TokenOptions")).Returns(_userConfigurationSectionMock.Object);
+
+            _wrapperUserConfigurationMock.Setup(m => m.GetTokenOption("TokenOptions")).Returns(ExpectedTokenOption);
+                        
+            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            SimpleUser simpleUser = new()
+            {
+                Email = "boh",
+                Password = "ciao"
+            };
+            User u = new(simpleUser);
+
+            _userRepositoryMock.Setup(m => m.GetUser(simpleUser)).ReturnsAsync(u);
+#pragma warning disable CS8603
+            _userRepositoryMock.Setup(m => m.FindUserWithEmail(simpleUser)).ReturnsAsync(() => null);
+#pragma warning restore CS8603
+            _userRepositoryMock.Setup(m => m.Register(simpleUser)).Returns(Task.CompletedTask);
+
+            string token = await _userManagerMock.Login(simpleUser);
+
+            Assert.IsFalse(string.IsNullOrEmpty(token));
+        }
+
+
+
+        [Test]
+        public void RegisterEmailUsed()
+        {
+            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            SimpleUser simpleUser = new()
+            {
+                Email = "boh",
+                Password = "ciao"
+            };
+            User u = new(simpleUser);
+
+            _userRepositoryMock.Setup(m => m.GetUser(simpleUser)).ReturnsAsync(u);
+            _userRepositoryMock.Setup(m => m.FindUserWithEmail(simpleUser)).ReturnsAsync(u);
+            _userRepositoryMock.Setup(m => m.Register(simpleUser)).Returns(Task.CompletedTask);
+
+            Assert.ThrowsAsync<Exception>(async () => await _userManagerMock.Register(simpleUser));
+        }
     }
-
-
-
 }
