@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AppFinaleLibri.Models
+namespace ProgettoFinale_ver0_0_0_1.Models.Books
 {
     public class Book
     {

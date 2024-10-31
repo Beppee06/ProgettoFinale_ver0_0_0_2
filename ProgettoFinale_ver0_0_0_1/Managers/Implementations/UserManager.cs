@@ -1,4 +1,5 @@
-﻿using esDef.Models;
+﻿using ProgettoFinale_ver0_0_0_1.Models.Users;
+using ProgettoFinale_ver0_0_0_1.Models.TokenOptions;
 using Microsoft.IdentityModel.Tokens;
 using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
 using ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper;

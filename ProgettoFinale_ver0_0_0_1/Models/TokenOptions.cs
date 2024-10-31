@@ -1,4 +1,4 @@
-﻿namespace esDef.Models
+﻿namespace ProgettoFinale_ver0_0_0_1.Models.TokenOptions
 {
     public class TokenOption
     {

@@ -1,7 +1,8 @@
 using Moq;
 using ProgettoFinale_ver0_0_0_1.Managers.Implementations;
 using Microsoft.Extensions.Configuration;
-using esDef.Models;
+using ProgettoFinale_ver0_0_0_1.Models.Users;
+using ProgettoFinale_ver0_0_0_1.Models.TokenOptions;
 using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +11,7 @@ using ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper;
 
 
 
-namespace TestProgettoFinaleVer0_0_0_1.UserControllerTest
+namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
 {
     //https://www.youtube.com/watch?v=uvqAGchg8bc
     //https://www.youtube.com/watch?v=9ZvDBSQa_so

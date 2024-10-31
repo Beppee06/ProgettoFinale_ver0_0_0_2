@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using esDef.Models;
+using ProgettoFinale_ver0_0_0_1.Models.Users;
 using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
 using System.ComponentModel.DataAnnotations;
 

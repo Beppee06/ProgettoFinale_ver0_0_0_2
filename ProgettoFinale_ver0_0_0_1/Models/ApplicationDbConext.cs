@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using esDef.Models;
-using AppFinaleLibri.Models;
+using ProgettoFinale_ver0_0_0_1.Models.Users;
+using ProgettoFinale_ver0_0_0_1.Models.Orders;
+using ProgettoFinale_ver0_0_0_1.Models.Books;
 
 public class ApplicationDbContext : DbContext
 {
