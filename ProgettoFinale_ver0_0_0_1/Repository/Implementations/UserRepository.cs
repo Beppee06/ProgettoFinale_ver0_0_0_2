@@ -11,12 +11,12 @@ namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
         {
             _context = context;
         }
-
+#pragma warning disable CS8603
         public async Task<User> GetUser(SimpleUser s)
         {
-            User sol = await _context.Users.Where(x=> x.Email == s.Email 
+            var sol = await _context.Users.Where(x=> x.Email == s.Email 
                             && x.Password == s.Password)
-                        .FirstAsync();
+                        .FirstOrDefaultAsync();
             return sol;
         }
 
@@ -27,7 +27,7 @@ namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
             var sol = await _context.Users.Where(x=> x.Email == s.Email).FirstOrDefaultAsync();
             return sol;
         }
-
+#pragma warning restore CS8603
 
 
         public async Task Register(SimpleUser s)

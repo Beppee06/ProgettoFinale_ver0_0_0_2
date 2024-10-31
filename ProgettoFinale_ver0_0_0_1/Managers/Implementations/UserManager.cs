@@ -22,10 +22,10 @@ namespace ProgettoFinale_ver0_0_0_1.Microsoft.Extensions.Configuration.Wrapper
         {
             _configuration = configuration;
         }
-        public TokenOption GetTokenOption(string key)
-        {
-            return _configuration.GetSection(key).Get<TokenOption>();
-        }
+#pragma warning disable CS8603
+        public TokenOption GetTokenOption(string key) 
+            => _configuration.GetSection(key).Get<TokenOption>();
+#pragma warning restore CS8603
     }
 }
 
