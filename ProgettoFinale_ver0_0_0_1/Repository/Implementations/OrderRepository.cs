@@ -15,7 +15,7 @@ namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
         {
             _context = context;
         }
-        public async Task<IEnumerable<Order>> GetOrders(Guid Id)
+        public async Task<IEnumerable<Order>?> GetOrders(Guid Id)
         {
             var sol = await _context.Orders.Where(x => x.UserId == Id)
                     .ToListAsync();

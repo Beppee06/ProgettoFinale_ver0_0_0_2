@@ -92,7 +92,10 @@ namespace AppFinaleLibri.Controllers
         {
             try
             {
-                Guid Id = Guid.Parse(HttpContext.User.Identity.Name);
+                string? stringId = HttpContext.User.Identity?.Name;
+                if (stringId == null)
+                    throw new Exception("User Is not reconized");
+                Guid Id = Guid.Parse(stringId);
                  await _orderManager.CreateOrder(o, Id);
                 return Ok("Ordine riuscito");
             }

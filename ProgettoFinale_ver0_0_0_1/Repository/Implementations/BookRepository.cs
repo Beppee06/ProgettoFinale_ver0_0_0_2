@@ -22,15 +22,13 @@ namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations
             return Id;
         }
 
-#pragma warning disable CS8603
-        public async Task<Book> GetBook(SimpleBook s)
+        public async Task<Book?> GetBook(SimpleBook s)
         {
             var book = await _context.Books.Where(x => x.Author == s.Author
                             && x.Title == s.Title)
                         .FirstOrDefaultAsync();
             return book;
         }
-#pragma warning restore CS8603
 
 
         public async Task<IEnumerable<Book>> GetBookList()

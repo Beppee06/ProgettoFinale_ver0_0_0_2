@@ -30,7 +30,10 @@ namespace AppFinaleLibri.Controllers
         [SwaggerResponse(StatusCodes.Status404NotFound, null, null)]
         public async Task<IActionResult> GetOrders()
         {
-            Guid Id = Guid.Parse(HttpContext.User.Identity.Name);
+            string? stringId = HttpContext.User.Identity?.Name;
+            if (stringId == null)
+                throw new Exception("User Is not reconized");
+            Guid Id = Guid.Parse(stringId);
             try
             {
                 var sol = await _orderManager.GetOrders(Id);

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProgettoFinale_ver0_0_0_1.Managers;
 using ProgettoFinale_ver0_0_0_1.Repositories.Interfaces;
 using ProgettoFinale_ver0_0_0_1.Repository.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ProgettoFinale_ver0_0_0_1.Repositories.Implementations
 {
@@ -19,8 +20,8 @@ namespace ProgettoFinale_ver0_0_0_1.Repositories.Implementations
 
         public async Task<IEnumerable<Order>> GetOrders(Guid Id)
         {
-            var sol = await _orderRepository.GetOrders(Id);
-            if (sol == null)
+            IEnumerable<Order>? sol = await _orderRepository.GetOrders(Id);
+            if (sol.IsNullOrEmpty())
                 throw new Exception($"no order corrisponds to {Id}");
             return sol;
         }
@@ -28,10 +29,8 @@ namespace ProgettoFinale_ver0_0_0_1.Repositories.Implementations
 
         public async Task CreateOrder(SimpleBook book, Guid UserId)
         {
-            if (book.Title == null || book.Author == null)
-            {
+            if (book.Title.IsNullOrEmpty() || book.Author.IsNullOrEmpty())
                 throw new Exception("not all fields have a value");
-            }
             try
             {
                 await AddOrder(book, UserId);
