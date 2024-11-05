@@ -1,11 +1,8 @@
-using ProgettoFinale_ver0_0_0_1.Models.Orders;
 using ProgettoFinale_ver0_0_0_1.Models.Books;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using ProgettoFinale_ver0_0_0_1.Managers.Interfaces;
-using ProgettoFinale_ver0_0_0_1.Repositories.Interfaces;
+using ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Orders;
+using ProgettoFinale_ver0_0_0_1.Managers.Interfaces.Books;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

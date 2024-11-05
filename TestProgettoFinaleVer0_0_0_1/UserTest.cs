@@ -24,7 +24,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public async Task GetUserSuccess()
         {
-            UserManager _umt = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _umt = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -51,7 +51,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void GetUserFailEmailMissing()
         {
-            UserManager _umt = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _umt = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "",
@@ -79,7 +79,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void GetUserFailPasswordMissing()
         {
-            UserManager _umt = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _umt = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -105,7 +105,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void GetUserAccountDoesNotExist()
         {
-            UserManager _umt = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _umt = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -142,7 +142,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void EmailUsedNoSuchEmailInTheDatabase()
         {
-            UserManager _userManagerMock = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _userManagerMock = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -172,7 +172,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void EmailUsedEmailAlreadyInUse()
         {
-            UserManager _umt = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _umt = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -204,7 +204,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void EmailUsedEmailMissing()
         {
-            UserManager _umt = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _umt = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "",
@@ -230,7 +230,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void EmailUsedPasswordMissing()
         {
-            UserManager _umt = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _umt = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -260,7 +260,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void LoginFailNoSuchAccount()
         {
-            UserManager _userManagerMock = new (_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _userManagerMock = new (_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -301,7 +301,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
 
             _wrapperUserConfigurationMock.Setup(m => m.GetTokenOption("TokenOptions")).Returns(ExpectedTokenOption);
 
-            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _userManagerMock = new(_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -337,7 +337,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
             _wrapperUserConfigurationMock.Setup(m => m.GetTokenOption("TokenOptions")).Returns(() => null);
 #pragma warning restore CS8603
 
-            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _userManagerMock = new(_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -376,7 +376,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
 
             _wrapperUserConfigurationMock.Setup(m => m.GetTokenOption("TokenOptions")).Returns(ExpectedTokenOption);
                         
-            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _userManagerMock = new(_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",
@@ -400,7 +400,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Users
         [Test]
         public void RegisterEmailUsed()
         {
-            UserManager _userManagerMock = new(_userConfigurationMock.Object, _userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
+            UserManager _userManagerMock = new(_userRepositoryMock.Object, _wrapperUserConfigurationMock.Object);
             SimpleUser simpleUser = new()
             {
                 Email = "boh",

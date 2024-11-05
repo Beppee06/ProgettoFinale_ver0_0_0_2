@@ -41,9 +41,8 @@ namespace ProgettoFinale_ver0_0_0_1.Managers.Implementations.Users
         private readonly IWrapperConfiguration _wrapperConfiguration;
 
 
-        public UserManager(IConfiguration configuration, IUserRepository userRepository, IWrapperConfiguration wrapperConfiguration)
+        public UserManager(IUserRepository userRepository, IWrapperConfiguration wrapperConfiguration)
         {
-            _configuration = configuration;
             _userRepository = userRepository;
             _wrapperConfiguration = wrapperConfiguration;
         }
