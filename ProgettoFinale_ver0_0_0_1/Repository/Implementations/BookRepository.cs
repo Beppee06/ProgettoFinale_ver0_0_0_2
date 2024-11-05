@@ -41,9 +41,9 @@ namespace ProgettoFinale_ver0_0_0_1.Repository.Implementations.Books
         public async Task<IEnumerable<Book>> GetBookListFiltered(SimpleBook s)
         {
             var sol = await _context.Books.Where(x => 
-                    (s.Author != "" 
+                    ( !string.IsNullOrEmpty(s.Author)
                         && x.Author.Contains(s.Author))
-                    || (s.Title != "" 
+                    || (!string.IsNullOrEmpty(s.Title)
                         && x.Title.Contains(s.Title))).ToListAsync();
             return sol;
         }

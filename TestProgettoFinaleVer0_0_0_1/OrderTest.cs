@@ -93,7 +93,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Orders
         //foundBook
 
         [Test]
-        public async Task FoundBookNotFound()
+        public void FoundBookNotFound()
         {
             OrderManager _orderManagerMock = new(_orderRepositoryMock.Object, _bookRepositoryMock.Object);
             SimpleBook simpleBook = new()

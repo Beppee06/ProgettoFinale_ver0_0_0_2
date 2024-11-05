@@ -6,8 +6,8 @@ namespace ProgettoFinale_ver0_0_0_1.Models.Books
     {
         [Key]
         public Guid BookId { get; set; }
-        public string Title { get; set; }
-        public string Author { get; set; }
+        public string? Title { get; set; }
+        public string? Author { get; set; }
 
         public Book(){}
         public Book(string title, string author) 
@@ -20,7 +20,7 @@ namespace ProgettoFinale_ver0_0_0_1.Models.Books
 
     public class SimpleBook
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
+        public string? Title { get; set; }
+        public string? Author { get; set; }
     }
 }

@@ -22,8 +22,7 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Books
         {
             BookManager _bookManagerMock = new (_bookRepositoryMock.Object);
             List<Book> expectedList = new ();
-            Book book = new Book();
-            expectedList.Add(book);
+            expectedList.Add(new Book());
 
             _bookRepositoryMock.Setup(x => x.GetBookList()).ReturnsAsync(expectedList);
 
@@ -40,6 +39,79 @@ namespace TestProgettoFinaleVer0_0_0_1.Tests.Books
             _bookRepositoryMock.Setup(x => x.GetBookList()).ReturnsAsync(expectedList);
 
             Assert.ThrowsAsync<Exception>(async () => await _bookManagerMock.GetBookList());
+        }
+
+
+
+
+        [Test]
+        public async Task GetBookListFilteredSucess()
+        {
+            BookManager _bookManagerMock = new(_bookRepositoryMock.Object);
+            List<Book> expectedList = new();
+            expectedList.Add(new Book());
+            SimpleBook simpleBook = new ();
+
+            _bookRepositoryMock.Setup(x => x.GetBookListFiltered(simpleBook)).ReturnsAsync(expectedList);
+            
+            Assert.That(await _bookManagerMock.GetBookListFiltered(simpleBook), Is.EqualTo(expectedList));
+        }
+
+
+
+
+
+        [Test]
+        public void GetBookListFilteredFail()
+        {
+            BookManager _bookManagerMock = new(_bookRepositoryMock.Object);
+            List<Book> expectedList = new();
+            SimpleBook simpleBook = new();
+
+            _bookRepositoryMock.Setup(x => x.GetBookListFiltered(simpleBook)).ReturnsAsync(expectedList);
+
+            Assert.ThrowsAsync<Exception>(async () => await _bookManagerMock.GetBookListFiltered(simpleBook));
+        }
+
+
+
+
+
+        [Test]
+        public void CreateBookSuccess()
+        {
+            BookManager _bookManagerMock = new(_bookRepositoryMock.Object);
+            SimpleBook simpleBook = new();
+            Book newBook = new()
+            {
+                Title = "title",
+                Author = "Author"
+            };
+
+            _bookRepositoryMock.Setup(x => x.GetBook(simpleBook)).ReturnsAsync(() => null);
+            _bookRepositoryMock.Setup(x => x.CreateBook(It.IsAny<Book>())).Returns(Task.CompletedTask);
+
+            Assert.DoesNotThrowAsync(async () => await _bookManagerMock.CreateBook(simpleBook));
+        }
+
+
+
+
+        [Test]
+        public void CreateBookFailsBookExists()
+        {
+            BookManager _bookManagerMock = new(_bookRepositoryMock.Object);
+            SimpleBook simpleBook = new();
+            Book newBook = new()
+            {
+                Title = "title",
+                Author = "Author"
+            };
+
+            _bookRepositoryMock.Setup(x => x.GetBook(simpleBook)).ReturnsAsync(newBook);
+            _bookRepositoryMock.Setup(x => x.CreateBook(It.IsAny<Book>())).Returns(Task.CompletedTask);
+
+            Assert.ThrowsAsync<Exception>(async () => await _bookManagerMock.CreateBook(simpleBook));
         }
     }
 }
